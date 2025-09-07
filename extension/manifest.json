@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "Universal Video Sync",
+  "version": "1.0",
+  "description": "Sync video across any site.",
+  "permissions": ["scripting", "activeTab"],
+  "host_permissions": ["<all_urls>"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["socket.io.min.js", "content.js"]
+    }
+  ],
+  "action": {
+    "default_title": "Video Sync"
+  }
+
+}

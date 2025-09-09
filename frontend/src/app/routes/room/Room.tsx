@@ -10,10 +10,10 @@ export default function Room({socket}:RoomProps) {
     const {roomId} = useParams();
     const [status, setStatus] = useState("Odaya bağlanıyor...");
     const [userName,setUserName] = useState(localStorage.getItem('userName') || "")
-    axios.get('/')
+    axios.get('/api/hello')
     useEffect(() => {
         setStatus(`Oda ID: ${roomId}`);
-        window.postMessage({ source: "FROM_REACT",action:"join_room",roomId:roomId }, "*");
+        window.postMessage({ source: "FROM_REACT",action:"join_room",roomId:roomId, username:userName }, "*");
     }, [roomId, socket]);
 
     function handleSubmit(e:any) {

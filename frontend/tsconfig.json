@@ -8,12 +8,12 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": ".",
+    "baseUrl": "src",
     "paths": {
       "react/*": ["node_modules/@types/react/*"],
-      "@helpers/*": ["src/helpers/*"],
-      "@app/*": ["src/app/*"],
-      "@routes/*": ["src/app/routes/*"]
+      "@helpers/*": ["helpers/*"],
+      "@app/*": ["app/*"],
+      "@routes/*": ["app/routes/*"]
     }
   },
   "include": ["src"]

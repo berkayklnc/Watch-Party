@@ -2,18 +2,27 @@ const socket = io("ws://localhost:4000");
 const roomId = document.querySelector("#roomId")
 let isRemoteSeek = false;
 let video = document.querySelector("video");
-
+let chatbox = document.querySelector("#chatbox")
 window.addEventListener("message", (event) => {
     if (event.source !== window) return;
-    if (event.data.type === "FROM_REACT") {
-        console.log("ID:", event.data.id);
-        socket.emit("join-room", event.data.id);
+    if (event.data.source === "FROM_REACT") {
+        if (event.data.action === "join_room") {
+            console.log(event)
+            socket.emit("join-room", event.data);
+        }
+        else if (event.data.action === "send_message"){
+            if (chatbox){
+                let p = document.createElement("p")
+                p.textContent=event.data.payload
+                chatbox.appendChild(p)
+            }
+            socket.emit("chat_message", event.data);
+        }
     }
 });
 
 
 if (video) {
-    console.log("Video bulundu!");
 
     window.addEventListener('load', function () {
 
@@ -31,12 +40,11 @@ if (video) {
             });
         });
 
-        video.addEventListener("seeked", (data) => {
+        video.addEventListener("seeked", () => {
             if (isRemoteSeek) {
                 isRemoteSeek = false;
                 return;
             }
-            console.log("süre atladı",data)
             socket.emit("video:seek", {
                 roomId: roomId.value,
                 currentTime: video.currentTime
@@ -44,28 +52,33 @@ if (video) {
         });
 
         socket.on("video:play", (data) => {
-            console.log("server videoyu başlattı",data)
             video.currentTime = data;
             video.play();
         });
 
         socket.on("video:pause", (data) => {
-            console.log("server videoyu durdurdu", data)
             video.currentTime = data;
             video.pause();
         });
 
         socket.on("video:seek", (data) => {
-            console.log("server videoyu atlattı" , data)
             isRemoteSeek = true;
             video.currentTime = data;
         });
+
+        socket.on("chat_message", (data) => {
+            console.log("chat",data.message)
+            if (chatbox){
+                let p = document.createElement("p")
+                p.textContent=data
+                chatbox.appendChild(p)
+            }
+        });
         if (roomId.value){
-            console.log(roomId.value)
-            socket.emit("join-room", roomId.value);
+            console.log(localStorage.getItem('userName'))
+            socket.emit("join-room", roomId.value,localStorage.getItem('userName'));
         }
     })
 
 } else {
-    console.log("Sayfada video bulunamadı.");
 }

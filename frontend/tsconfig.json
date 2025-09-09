@@ -13,7 +13,7 @@
       "react/*": ["node_modules/@types/react/*"],
       "@helpers/*": ["src/helpers/*"],
       "@app/*": ["src/app/*"],
-      "@routes/*": ["src/routes/*"]
+      "@routes/*": ["src/app/routes/*"]
     }
   },
   "include": ["src"]

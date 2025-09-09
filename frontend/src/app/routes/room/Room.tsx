@@ -1,7 +1,7 @@
 import {useParams} from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { Socket } from "socket.io-client";
-import axios from "@helpers/axios";
+import axios from "@helpers/axios.ts";
 
 interface RoomProps {
     socket: Socket;

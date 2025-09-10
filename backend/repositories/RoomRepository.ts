@@ -1,7 +1,7 @@
 import db from '../db.js';
 import * as interfaces from "../interfaces/index.ts";
 export default class RoomRepository {
-    public static async getUsers (room_id) {
+    public static async getUsers (room_id:string) {
         const query = `
         SELECT users.username,room_users.is_admin
         FROM users
@@ -11,7 +11,7 @@ export default class RoomRepository {
     `;
         return db.manyOrNone(query, [room_id]);
     }
-    public static async createorUpdateRoom (room_id)  {
+    public static async createOrUpdateRoom (room_id:string)  {
         const query = `
         INSERT INTO rooms (room_id)
         VALUES ($1)
@@ -22,7 +22,6 @@ export default class RoomRepository {
         return db.one(query, [room_id]);
     };
     public static async  addUserToRoom (room:interfaces.Room,user:interfaces.User) {
-        console.log(3333)
         const query = `
         INSERT INTO room_users (room_id,socket_id,is_admin)
         VALUES ($1,

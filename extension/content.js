@@ -7,8 +7,7 @@ window.addEventListener("message", (event) => {
     if (event.source !== window) return;
     if (event.data.source === "FROM_REACT") {
         if (event.data.action === "join_room") {
-            console.log(event)
-            socket.emit("join-room", event.data);
+            socket.emit("join-room", event.data.roomId, event.data.username);
         }
         else if (event.data.action === "send_message"){
             if (chatbox){

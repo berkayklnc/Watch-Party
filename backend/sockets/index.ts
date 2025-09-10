@@ -11,7 +11,7 @@ export function registerSocket(io: Server) {
 
         socket.on("join-room", async (room_id, username) => {
             socket.join(room_id);
-            await UserController.jointoRoom(username,socket.id,room_id)
+            await UserController.joinToRoom(username,socket.id,room_id)
             if (username) {
                 console.log(`${socket.id} odaya katıldı`);
             }

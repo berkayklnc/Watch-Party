@@ -1,10 +1,11 @@
 import { Router } from "express";
+import RoomController from "../controllers/RoomController.ts";
 
 const router = Router();
 
-router.get("/join_room", (req, res) => {
-    console.log(req)
-    res.send("Merhaba, bu bir GET endpoint!");
+router.get("/:roomId/join_room", async (req, res) => {
+    console.log(req.params.roomId)
+    res.send(await RoomController.getUsers(req.params.roomId));
 });
 
 export default router;

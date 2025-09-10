@@ -5,7 +5,7 @@ export default class UserController {
     public static async jointoRoom(username,socket_id,room_id){
         const room:interfaces.Room = await RoomController.createorUpdateRoom(room_id)
         const new_user:interfaces.User = await UserController.createUser(username,socket_id);
-        const last = await RoomController.addUsertoRoom(room,new_user)
+        const last = await RoomController.addUserToRoom(room,new_user)
         console.log(last)
     }
     public static async createUser (username,socket_id) {

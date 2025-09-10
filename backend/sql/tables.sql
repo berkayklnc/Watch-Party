@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS users (
- socket_id TEXT PRIMARY KEY  NOT NULL,
+ socket_id TEXT PRIMARY KEY NOT NULL,
  username TEXT NOT NULL
 );
 
@@ -11,11 +11,11 @@ CREATE TABLE IF NOT EXISTS rooms (
 CREATE TABLE IF NOT EXISTS room_users (
  room_id TEXT NOT NULL,
  socket_id TEXT NOT NULL,
- isAdmin BOOLEAN DEFAULT FALSE NOT NULL,
+ is_admin BOOLEAN DEFAULT FALSE NOT NULL,
  CONSTRAINT fk_room FOREIGN KEY (room_id)
-    REFERENCES rooms(room_id),
+    REFERENCES rooms(room_id) ON DELETE CASCADE,
  CONSTRAINT fk_user FOREIGN KEY (socket_id)
-    REFERENCES users(socket_id)
+    REFERENCES users(socket_id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS chats (
@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS chats (
  message TEXT NOT NULL,
  timespan TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
  CONSTRAINT fk_room FOREIGN KEY (room_id)
-     REFERENCES rooms(room_id)
+     REFERENCES rooms(room_id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS room_videos (
@@ -32,5 +32,5 @@ CREATE TABLE IF NOT EXISTS room_videos (
  video_link TEXT NOT NULL,
  who_added TEXT NOT NULL,
  CONSTRAINT fk_room FOREIGN KEY (room_id)
-     REFERENCES rooms(room_id)
+     REFERENCES rooms(room_id) ON DELETE CASCADE
 );
